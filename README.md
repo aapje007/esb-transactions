@@ -1,23 +1,23 @@
 # Transactions
 
 ## Overview
-This example will show you how to leverage the JTA transaction manager provided by Fuse ESB when working with JMS
+This example will show you how to leverage the JTA transaction manager provided by JBoss Fuse when working with JMS
 or JTA Camel endpoints.  We will setup a route that reads messages from a queue and inserts information into a database
-using JTA and deploy that onto Fuse ESB 7.1.
+using JTA and deploy that onto JBoss Fuse 6.0.0.
 
 ## What You Will Learn
 In studying this example you will learn:
 - how to set up an XA-aware DataSource
 - how to configure a JTA persistence unit
 - how to define a transactional route
-- how to leverage Fuse ESB's JTA and JPA support in your routes
+- how to leverage JBoss Fuse's JTA and JPA support in your routes
 
 ## Prerequisites
 Before building and running this example you need:
 
 * Maven 3.0.4 or higher
 * JDK 1.6
-* Fuse ESB Enterprise 7.1
+* JBoss Fuse 6.0.0
 * Apache Derby 10.9.1.0 or higher
 
 ## Files in the Example
@@ -44,7 +44,7 @@ Start Apache Derby's network server with
 ### Create the database tables
 Open Derby's interactive shell:
 
-* on Linux/Unix/MacOS: `DERBY_HOME/ij.sh`
+* on Linux/Unix/MacOS: `DERBY_HOME/ij`
 * on Windows: `DERBY_HOME\ij.bat`
 
 In the shell, run these two commands:
@@ -68,25 +68,25 @@ running for now, we will use it again later to verify that our messages are bein
 In the directory where this README.md file is found, run `mvn clean install` to build the example.
 
 ## Running the Example
-We will refer to the directory that contains your Fuse ESB installation as `$ESB_HOME`.
+We will refer to the directory that contains your JBoss Fuse installation as `$FUSE_HOME`.
 
 ### Configuring additional users
-Before we can start Fuse ESB, we have to make sure we configure a user we can use later on to connect to the embedded
-message broker and send messages to a queue.  Edit the `$ESB_HOME/etc/users.properties` file and add a line that says:
+Before we can start JBoss Fuse, we have to make sure we configure a user we can use later on to connect to the embedded
+message broker and send messages to a queue.  Edit the `$FUSE_HOME/etc/users.properties` file and add a line that says:
 
     admin=admin,admin
 
 The syntax for this line is &lt;userid&gt;=&lt;password&gt;,&lt;group&gt;, so we're creating a user called `admin` with a password `admin`
 who's a member of the `admin` group.
 
-### Start Fuse ESB
-Start Fuse ESB with
+### Start JBoss Fuse
+Start JBoss Fuse with
 
-* on Linux/Unix/MacOS: `bin/fuseesb`
-* on Windows: `bin\fuseesb.bat`
+* on Linux/Unix/MacOS: `bin/fuse`
+* on Windows: `bin\fuse.bat`
 
 ### Adding the features repository
-To allow for easy installation of the example, we created a features descriptor.  On Fuse ESB's console, add the
+To allow for easy installation of the example, we created a features descriptor.  On JBoss Fuse's console, add the
 extra features repository with this command:
 
     FuseESB:karaf@root> features:addurl mvn:org.fusesource.example.transactions/features/1.0-SNAPSHOT/xml/features
@@ -100,7 +100,7 @@ Using `osgi:list` in the console, you should now see this demo's bundles at the 
 
 
 ### Using jconsole to send JMS messages
-Open `jconsole` and connect to the running Fuse ESB Enterprise instance.  If the instance is running locally, connect to
+Open `jconsole` and connect to the running JBoss Fuse instance.  If the instance is running locally, connect to
 the process called `org.apache.karaf.main.Main`.
 
 On the MBeans tab, navigate to `org.apache.activemq` &rarr; `fusemq` &rarr; `Queue` &rarr; `Input.Flights`.  Send a few
@@ -118,4 +118,4 @@ You will see new database rows for every message you sent, using the message bod
 ## More information
 For more information see:
 
-* Fuse ESB Enterprise 7.1 - [EIP Transaction Guide](http://fusesource.com/docs/esbent/7.1/camel_tx/front.htm) (registration required)
+* JBoss Fuse 6.0.0 - [EIP Component Reference](https://access.redhat.com/knowledge/docs/en-US/JBoss_Fuse/6.0.EA/html/EIP_Component_Reference/files/front.html)
